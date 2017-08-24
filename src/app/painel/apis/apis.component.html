@@ -1,0 +1,29 @@
+<div class="col-lg-3 col-sm-6" *ngFor="let painel of listaPaineis">
+
+  <div class="card">
+    <div class="content">
+      <div class="row">
+        <div class="col-xs-5">
+          <div class="text-center" [ngClass]="{'icon-danger': painel.Icone == 'sentiment_very_dissatisfied',
+                  'icon-warning': painel.Icone == 'sentiment_neutral',
+                  'icon-success': painel.Icone == 'sentiment_very_satisfied'}">
+            <i class="material-icons md-48">{{ painel.Icone }}</i>
+          </div>
+        </div>
+        <div class="col-xs-7">
+          <div class="numbers">
+            {{ painel.Nome }}
+            <p>{{ painel.Tempo }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <hr />
+        <div class="stats">
+          <i class="ti-reload"></i> Atualizado em {{ painel.DataAtualizacao | date: 'dd/MM/yyyy' }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
