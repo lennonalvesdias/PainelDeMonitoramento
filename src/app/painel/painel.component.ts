@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PainelComponent implements OnInit {
 
-  private _notificacoes: Array<string> = ['Exemplo de Alerta 1', 'Exemplo de Alerta 2'];
+  private _notificacoes: Array<string> = [];
 
   constructor(private _authService: AuthService) { }
 

@@ -13,10 +13,9 @@ import { RestClientService } from '../../compartilhado/services/rest-client.serv
 })
 export class IntegracoesComponent implements OnInit {
 
-  private _qtdPrecos: number;
-  private _qtdProdutos: number;
+  private _intervalo = Observable.timer(0, 60000);
 
-  private _intervalo = Observable.timer(0, 5000);
+  private _listaPaineis: object = [];
 
   private _config: ApiConfigModel = {
     Debug: false,
@@ -29,32 +28,38 @@ export class IntegracoesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.contarPrecos();
-    this.contarProdutos();
+    this.filaPrecos();
+    this.filaProdutos();
+    this.filaEstoque();
+    this.filaStatusPedido();
   }
 
-  contarPrecos() {
-    const segmento = '/FilasIntegracao/ContarFilaPrecos';
+  filaPrecos() {
+    const segmento = '/FilasIntegracao/StatusFilaPreco';
     const getTemp = this._intervalo.switchMap(() => this._rest.get(this._config, segmento));
-    const precos = getTemp.subscribe(data => this._qtdPrecos = data.Total);
+    const precos = getTemp.subscribe(data => this._listaPaineis[0] = data);
   }
 
-  contarProdutos() {
-    const segmento = '/FilasIntegracao/ContarFilaProdutos';
+  filaProdutos() {
+    const segmento = '/FilasIntegracao/StatusFilaProduto';
     const getTemp = this._intervalo.switchMap(() => this._rest.get(this._config, segmento));
-    const produtos = getTemp.subscribe(data => this._qtdProdutos = data.Total);
+    const produtos = getTemp.subscribe(data => this._listaPaineis[1] = data);
   }
 
-  get precos() {
-    return this._qtdPrecos;
+  filaEstoque() {
+    const segmento = '/FilasIntegracao/StatusFilaEstoque';
+    const getTemp = this._intervalo.switchMap(() => this._rest.get(this._config, segmento));
+    const produtos = getTemp.subscribe(data => this._listaPaineis[2] = data);
   }
 
-  get produtos() {
-    return this._qtdProdutos;
+  filaStatusPedido() {
+    const segmento = '/FilasIntegracao/StatusFilaStatusPedido';
+    const getTemp = this._intervalo.switchMap(() => this._rest.get(this._config, segmento));
+    const produtos = getTemp.subscribe(data => this._listaPaineis[3] = data);
   }
 
-  get dataAtual() {
-    return Date.now();
+  get listaPaineis() {
+    return this._listaPaineis;
   }
 
 }
