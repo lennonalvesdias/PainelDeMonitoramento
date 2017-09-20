@@ -1,0 +1,42 @@
+
+import { Observable } from 'rxjs/Rx';
+import { ApiConfigModel } from './../../../compartilhado/classes/api-config-model';
+import { RestClientService } from './../../../compartilhado/services/rest-client.service';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-preco',
+  templateUrl: './preco.component.html',
+  styleUrls: ['./preco.component.scss']
+})
+export class PrecoComponent implements OnInit {
+
+  private _painel;
+
+  private _intervalo = Observable.timer(0, 60000);
+
+  private _config: ApiConfigModel = {
+    Debug: false,
+    Prefixo: '/Fenix',
+    UrlDebug: 'http://localhost:53236'
+  }
+
+  constructor(
+    private _rest: RestClientService
+  ) { }
+
+  ngOnInit() {
+    this.filaPrecos();
+  }
+
+  filaPrecos() {
+    const segmento = '/FilasIntegracao/StatusFilaPreco';
+    const getTemp = this._intervalo.switchMap(() => this._rest.get(this._config, segmento));
+    const precos = getTemp.subscribe(data => this._painel = data);
+  }
+
+  get painel() {
+    return this._painel;
+  }
+
+}

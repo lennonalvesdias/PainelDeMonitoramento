@@ -1,0 +1,31 @@
+<div class="col-lg-12 col-sm-6">
+
+  <div class="card">
+    <div class="content">
+      <div class="row">
+        <div class="col-xs-5">
+          <div class="text-center" [ngClass]="{'icon-danger': painel?.Status == 3,
+                      'icon-warning': painel?.Status == 2,
+                      'icon-success': painel?.Status == 1}">
+            <i class="material-icons md-240">{{ painel?.Status == 1 ? 'sentiment_very_satisfied' : painel?.Status == 2 ? 'sentiment_neutral' : 'sentiment_very_dissatisfied' }}</i>
+          </div>
+        </div>
+        <div class="col-xs-7">
+          <div class="numbers">
+            <p class="titulo fila">Fila de {{ painel?.Fila }}</p>
+            <p class="titulo quantidade">{{ painel?.Total }} {{ painel?.TotalDistinto ? '/ ' + painel.TotalDistinto : '' }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <hr />
+        <div class="stats">
+          <p class="titulo informacoes"><i class="ti-time"></i> Mais recente: {{ painel?.DataUltimoConsumido | date: "dd/MM/yyyy ' às ' HH:mm:ss" }}</p>
+          <p class="titulo informacoes"><i class="ti-time"></i> Mais antigo: {{ painel?.DataMaisAntigo | date: "dd/MM/yyyy ' às ' HH:mm:ss" }}</p>
+          <p class="titulo informacoes"><i class="ti-reload"></i> Atualizado em: {{ painel?.DataConsulta | date: "dd/MM/yyyy ' às ' HH:mm:ss" }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
